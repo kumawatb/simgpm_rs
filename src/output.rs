@@ -96,10 +96,43 @@ impl Output{
     }
 
     pub fn write_evolfile(&self, config: &Config, time: u64, pop: &Population,gpmap: &Gpmap){
-        // @TODO
+        let mut total_evol: f64 = 0.0;
+
+        for idx in 0..config.grid_x{
+            for idy in 0..config.grid_y{
+                let popsize = pop.get_at(idx,idy);
+                let evol = gpmap.get_evol_at(config,idx,idy);
+
+                total_evol += popsize as f64*evol;
+
+            }
+        }
+
+        total_evol /= config.popsize as f64;
+
+        self.evolfile.as_ref().unwrap().write(format!("{},{},{}\n",config.replid,time,total_evol).as_bytes()).unwrap();
     }
 
     pub fn write_altmutfile(&self, config: &Config, time: u64, pop: &Population, gpmap: &Gpmap){
-        // @TODO
+
+        let pid_list: &Vec<u64> = gpmap.get_pid_list();
+
+        for pid in pid_list.iter(){
+            let mut total_prob = 1.0; // Probability of not changing
+
+            for idx in 0..config.grid_x{
+                for idy in 0..config.grid_y{
+                    let popsize = pop.get_at(idx,idy);
+                    let prob = gpmap.get_mutprob(config,*pid,idx,idy);
+
+                    total_prob *= ((1.00-prob).powi(popsize as i32)*((10.0 as f64).powi(10))).round()/(10.0 as f64).powi(10);
+                }
+            }
+
+            
+            total_prob = 1.00 - total_prob;
+
+            self.altmutfile.as_ref().unwrap().write(format!("{},{},{},{:.10}\n",config.replid,time,*pid,total_prob).as_bytes()).unwrap();
+        }
     }
 }
