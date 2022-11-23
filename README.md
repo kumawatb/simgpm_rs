@@ -43,3 +43,35 @@ The simulation can be run with different parameter values for population size, m
 ```
 ./simgpm --help
 ```
+```
+SimGpm: A program to simulate evolution on arbitrary genotype-phenotype maps
+
+Optional arguments:
+  -h,--help             Show this help message and exit
+  -x,--grid_x GRID_X    Grid size in x
+  -y,--grid_y GRID_Y    Grid size in y
+  -g,--gpfilepath GPFILEPATH
+                        Path to the genotype-phenotype map file
+  -e,--envfilepath ENVFILEPATH
+                        Path to the environment file
+  -p,--popsize POPSIZE  Population size
+  -m,--mutprob MUTPROB  Mutation probability
+  -t,--maxgens MAXGENS  Maximum generations to run the simulation for
+  -s,--saveevery SAVEEVERY
+                        Time interval duration to create population saves (in
+                        generations)
+  -d,--outdom OUTDOM    0/1, output file containing dominant genotypes?
+  -v,--outevol OUTEVOL  0/1, output file containing evolvabilities?
+  -n,--outenv OUTENV    0/1, output file containing environments?
+  -a,--outaltmut OUTALTMUT
+                        0/1, output file containing alternate mutant
+                        probabilities?
+  -o,--outpopsave OUTPOPSAVE
+                        0/1, output file containing population saves?
+  -h,--rndstrtpheno RNDSTRTPHENO
+                        Start simulation with all organisms having a random
+                        genotype from given phenotypes?
+  -l,--replid REPLID    If only one replicate, should this replicate be given
+                        an id?
+
+```
