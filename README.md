@@ -1,7 +1,8 @@
 ### simgpm.rs
 
 Wright-Fisher populations on arbitrary genotype spaces in a changing environment
-Bhaskar Kumawat (https://kumawatb.com)
+
+Written by: Bhaskar Kumawat (https://kumawatb.com)
 
 ### Installation
 
