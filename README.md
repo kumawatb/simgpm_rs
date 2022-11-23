@@ -14,5 +14,7 @@ If you would like to compile it on your machine, you will need the latest instal
 cargo build -r
 ```
 
+### Simulation Setup
 
 
+### Running the simulation
