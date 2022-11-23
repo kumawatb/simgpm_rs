@@ -6,15 +6,24 @@ Written by: Bhaskar Kumawat (https://kumawatb.com)
 
 ### Installation
 
-The easiest way to get this package up and running on your machine is to download the pre-compiled binaries from the release page: ___
+To get this package up and running on your machine, you will need the latest installation of rust (https://www.rust-lang.org/tools/install). To build the program,
 
-If you would like to compile it on your machine, you will need the latest installation of rust (https://www.rust-lang.org/tools/install). To build the program, clone the repository to your machine, switch to its root, and execute the following command:
-
+1. Clone the repository to your machine
+```
+git clone https://github.com/kumawatb/simgpm_rs.git
+```
+3. Switch to the root directory
+```
+cd simgpm_rs
+```
+4. Execute the following command
 ```
 cargo build -r
 ```
+The `simgpm` executable will be built in the `target/release` folder. 
 
 ### Simulation Setup
+
 
 
 ### Running the simulation
