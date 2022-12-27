@@ -1,0 +1,9 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Kumawat
+    given-names: Bhaskar
+    orcid: https://orcid.org/0000-0002-6128-8971
+title: kumawatb/simgpm_rs: A program to simulate Wright-Fisher evolutionary dynamics on an explicitly defined genotype-phenotype map. Preprint release (2022_12_27)
+version: v1.0.1
+date-released: 2022-12-27
