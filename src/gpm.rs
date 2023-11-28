@@ -1,4 +1,3 @@
-use core::num;
 use std::{error::Error, fs,cmp};
 use crate::config::Config;
 use rand::seq::SliceRandom;
@@ -67,10 +66,10 @@ impl Gpmap{
         // get number of neighbors that have different pid
         let mut num_diff:f64  = 0.0;
 
-        let mut north_pid:u64 = 0;
-        let mut east_pid:u64 = 0;
-        let mut south_pid:u64 = 0;
-        let mut west_pid:u64= 0;
+        let north_pid:u64;
+        let east_pid:u64;
+        let south_pid:u64;
+        let west_pid:u64;
 
         // Check north neighbor
         if y==cfg.grid_y-1{
@@ -78,7 +77,6 @@ impl Gpmap{
         } else {
             north_pid = self.gpmap[x as usize][(y+1) as usize];
         }
-
 
         // Check east neighbor
         if x==cfg.grid_x-1{
@@ -116,8 +114,8 @@ impl Gpmap{
         for (idx,row) in self.gpmap.iter().enumerate(){
             for (idy, pid) in row.iter().enumerate(){
                 if *pid==target_pid{
-                    let del_x = cmp::min((x_self as i32-idx as i32).abs(),(idx as i32+(cfg.grid_x as i32-x_self as i32)));
-                    let del_y = cmp::min((y_self as i32-idy as i32).abs(),(idy as i32+(cfg.grid_y as i32-y_self as i32)));
+                    let del_x = cmp::min((x_self as i32-idx as i32).abs(),idx as i32+(cfg.grid_x as i32-x_self as i32));
+                    let del_y = cmp::min((y_self as i32-idy as i32).abs(),idy as i32+(cfg.grid_y as i32-y_self as i32));
 
                     let k = del_x+del_y;
 

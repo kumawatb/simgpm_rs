@@ -12,7 +12,8 @@ pub struct Output{
     pub evolfile: Option<File>,
     pub envfile: Option<File>,
     pub altmutfile: Option<File>,
-    pub popfile: Option<File>
+    pub popfile: Option<File>,
+    pub avgfile: Option<File>
 
 }
 
@@ -42,6 +43,10 @@ impl Output{
             output.popfile = Some(File::create("./output/population.csv")?);
             output.popfile.as_ref().unwrap().write(b"repl,time,x,y,pop\n").unwrap();
         }
+        if config.outtimeavg{
+            output.avgfile = Some(File::create("./output/timeavg.csv")?);
+            output.avgfile.as_ref().unwrap().write(b"repl,x,y,pop\n").unwrap();
+        }
 
         Ok(output)
     }
@@ -70,6 +75,11 @@ impl Output{
         // Write evolvability file
         if !self.evolfile.is_none(){
             self.write_evolfile(config,time,pop,gpmap);
+        }
+
+        // Write Time average file
+        if !self.avgfile.is_none(){
+            self.write_avgfile(config, time, pop);
         }
     }
 
@@ -135,4 +145,20 @@ impl Output{
             self.altmutfile.as_ref().unwrap().write(format!("{},{},{},{:.10}\n",config.replid,time,*pid,total_prob).as_bytes()).unwrap();
         }
     }
+
+    pub fn write_avgfile(&self,config: &Config, time: u64, pop: &Population){
+        if time==config.timeavgend{ // This condition requires that generate_output is called at the time step "timeavgend", otherwise no time average will be created!
+            for idx in 0..config.grid_x{
+                for idy in 0..config.grid_y{
+                    let size = pop.avg_get_at(idx,idy);
+                    if size!=0.0{
+                        self.avgfile.as_ref().unwrap().write(
+                            format!("{},{},{},{}\n",config.replid,idx,idy,size).as_bytes()
+                        ).unwrap();
+                    }
+                }
+            }
+        }
+    }
+
 }

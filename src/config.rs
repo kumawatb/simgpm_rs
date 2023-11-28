@@ -37,7 +37,11 @@ pub struct Config {
     pub outenv: bool, // Output a file containing environment states?
     pub outaltmut: bool, // Output a file containing alternate mutation probabilities?
     pub outpopsave: bool, // Output population saves?
+    pub outtimeavg:bool, // Output time-averages?
 
+    // Time-average options
+    pub timeavgstart: u64, // Generation when to start time-averaging of population
+    pub timeavgend: u64, // Generation when to end time-averaginf of population
 
 
     // // Misc parameters
@@ -66,6 +70,10 @@ impl Default for Config{
             outenv: true,
             outaltmut: true,
             outpopsave: true,
+            outtimeavg: true,
+
+            timeavgstart:0,
+            timeavgend:1000000,
 
             rndstrtpheno: vec![0,1], // Phenotype id 0 denotes inviable genotypes
             replid: 0
@@ -97,6 +105,10 @@ impl Config{
             ap.refer(&mut config.outenv).add_option(&["-n","--outenv"],Store,"0/1, output file containing environments?");
             ap.refer(&mut config.outaltmut).add_option(&["-a","--outaltmut"],Store,"0/1, output file containing alternate mutant probabilities?");
             ap.refer(&mut config.outpopsave).add_option(&["-o","--outpopsave"],Store,"0/1, output file containing population saves?");
+            ap.refer(&mut config.outtimeavg).add_option(&["--outtimeavg"],Store, "0/1, output file containing the time average?");
+
+            ap.refer(&mut config.timeavgstart).add_option(&["--timeavgstart"],Store,"Generation to start time-averaging at");
+            ap.refer(&mut config.timeavgend).add_option(&["--timeavgend"],Store,"Generation to end time-averaging at");
 
             ap.refer(&mut config.rndstrtpheno).add_option(&["-h","--rndstrtpheno"],List,"Start simulation with all organisms having a random genotype from given phenotypes?");
             ap.refer(&mut config.replid).add_option(&["-l","--replid"],Store,"If only one replicate, should this replicate be given an id?");
@@ -111,7 +123,7 @@ impl Config{
 
 impl fmt::Display for Config{
     fn fmt(&self, f:&mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f,"--grid_x {} --grid_y {} --gpfilepath {:?} --envfilepath {:?} --popsize {} --mutprob {} --maxgens {} --saveevery {}  --outdom {} --outevol {} --outenv {} --outaltmut {} --outpopsave  {} --rndstrtpheno {:?} --replid {}",
+        write!(f,"--grid_x {} --grid_y {} --gpfilepath {:?} --envfilepath {:?} --popsize {} --mutprob {} --maxgens {} --saveevery {}  --outdom {} --outevol {} --outenv {} --outaltmut {} --outpopsave  {} --outtimeavg {} --timeavgstart {} --timeavgend {} --rndstrtpheno {:?} --replid {}",
             self.grid_x,
             self.grid_y,
             self.gpfilepath,
@@ -125,6 +137,9 @@ impl fmt::Display for Config{
             self.outenv,
             self.outaltmut,
             self.outpopsave,
+            self.outtimeavg,
+            self.timeavgstart,
+            self.timeavgend,
             self.rndstrtpheno,
             self.replid    
         )

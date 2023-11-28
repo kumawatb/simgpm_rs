@@ -4,7 +4,7 @@ use crate::output::Output;
 use crate::environment::Environment;
 use crate::gpm::Gpmap;
 use crate::pop::Population;
-use std::{error::Error, fs};
+use std::error::Error;
 
 use rand::prelude::*;
 use rand::distributions::WeightedIndex;
@@ -41,6 +41,7 @@ impl Simulation{
 
             // SELECTION AND MUTATION
             self.select_mutate(&mut pop,&gfmap); // Perform selection and mutation on population using pfmap
+            pop.add_to_average(&self.config,time); // Add new population to population average (checked if required using time)
 
             // UPDATE ENVIRONMENT
             envid = self.env.get_envid(time,envid); // Get environment from env
@@ -49,12 +50,12 @@ impl Simulation{
 
             // OUTPUTS
             let mut outflag = false;
-            if(time%self.config.saveevery==0){
+            if time%self.config.saveevery==0 {
                 self.output.generate_output(time,&self.config,envid,&pop,&self.gpmap);
                 outflag = true;
             }
             // Output if not saved by saveevery but is final generation
-            if(time==self.config.maxgens && !outflag){
+            if time==self.config.maxgens && !outflag {
                 self.output.generate_output(time,&self.config,envid,&pop,&self.gpmap);
             }
         }

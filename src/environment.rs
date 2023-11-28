@@ -1,5 +1,4 @@
 use crate::config::Config;
-use std::fmt;
 use std::{error::Error, fs};
 use std::path::PathBuf;
 use std::collections::HashMap;
@@ -14,7 +13,7 @@ enum EnvRegimeType{
 pub struct Environment{
     regimetype: EnvRegimeType, // Environment change regime type
     pfmaps: Vec<Vec<f64>>,     // Phenotype fitness maps (first index is envid, second index is pid)
-    cyctimes: Option<Vec<u64>>,        // Cycling times (might be null)
+    _cyctimes: Option<Vec<u64>>,        // Cycling times (might be null)
     weights: Option<Vec<f64>>,         // Probabilities (might be null)
 }
 
@@ -63,7 +62,7 @@ impl Environment{
 
 
         // Copy pffiles to output directory
-        for (k,v) in &pfpaths{
+        for (_k,v) in &pfpaths{
             let pffname = v.file_name().unwrap().to_str().unwrap();
             fs::copy(v,format!("./output/{pffname}")).unwrap();
         }
@@ -159,14 +158,14 @@ impl Environment{
         let env = Environment { 
             regimetype: regimetype.unwrap(), 
             pfmaps: pfmaps, 
-            cyctimes: cyctimes, 
+            _cyctimes: cyctimes, 
             weights: weights
         };
 
         Ok(env)
     }
 
-    pub fn get_envid(&self,time: u64,last_envid: i32)-> i32{
+    pub fn get_envid(&self,_time: u64,last_envid: i32)-> i32{
         match self.regimetype{
 
 
@@ -181,13 +180,12 @@ impl Environment{
             EnvRegimeType::DetCyclic => {
                 // Implement this from the julia version if required
                 todo!();
-                return 0
             },
 
 
             // Probabilistically switching environment
             EnvRegimeType::ProbSwitch => {
-                let mut new_envid = -1;
+                let new_envid:i32;
                 if last_envid!=-1{
                     let switch_prob = self.weights.as_ref().unwrap()[last_envid as usize];
                     let next_envid = if last_envid<(self.weights.as_ref().unwrap().len() as i32 -1){

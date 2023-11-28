@@ -1,1 +1,0 @@
---grid_x 40 --grid_y 20 --gpfilepath "config/gpm.csv" --envfilepath "config/env.cfg" --popsize 1000 --mutprob 0.01 --maxgens 10000 --saveevery 10  --outdom true --outevol true --outenv true --outaltmut true --outpopsave  true --rndstrtpheno [0, 1] --replid 0
