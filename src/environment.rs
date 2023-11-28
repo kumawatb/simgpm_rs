@@ -148,6 +148,7 @@ impl Environment{
                     pfmaps.push(pfmap);
 
                     weights_temp.push(regline_as_vec[0].parse::<f64>().unwrap());
+                    weights_temp.iter_mut().for_each(|w| {if *w<0.0 { *w=cfg.omega }}); // Convert every -1 to omega!
 
                 }
                 weights = Some(weights_temp);

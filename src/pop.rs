@@ -61,10 +61,10 @@ impl Population{
     }
 
     pub fn add_to_average(&mut self, config: &Config, time: u64){
-        if time==config.timeavgstart{
+        if time==config.timeavgstart {
             self.avgpop = self.pop.iter().map(|a| a.iter().map(|&b| b as f64).collect()).collect();
         }
-        if time>config.timeavgstart{
+        if time>config.timeavgstart {
             let t_elapsed = time-config.timeavgstart;
             self.avgpop.iter_mut().for_each(|a| a.iter_mut().for_each(|b| *b *= t_elapsed as f64)); // Multiply avg_pop (in place) by time elapsed since first pop added
 

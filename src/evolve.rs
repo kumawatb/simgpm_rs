@@ -35,8 +35,10 @@ impl Simulation{
         let mut pop = self.initpop.clone(); // Make a copy of the initial population
         self.output.generate_output(0,&self.config,envid,&pop,&self.gpmap); // Generate an output
 
+        println!("Starting run...");
+
         for time in 1..(self.config.maxgens+1){
-            println!("{}",time);
+
             // Note: Population selects on environment from last generation to create this generation!
 
             // SELECTION AND MUTATION
@@ -59,6 +61,7 @@ impl Simulation{
                 self.output.generate_output(time,&self.config,envid,&pop,&self.gpmap);
             }
         }
+        println!("Finished succesfully!");
     }
 
     pub fn select_mutate(&self,pop: &mut Population,gfmap: &Vec<Vec<f64>>){

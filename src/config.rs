@@ -47,6 +47,7 @@ pub struct Config {
     // // Misc parameters
     pub rndstrtpheno: Vec<u64>, // start with population in a random genotypes belonging to a certain phenotype?
     pub replid: u64, // If using only one replicate should this replicate be assigned an ID? 
+    pub omega: f64, // Switching rate if environment type is switch_prob and a rate of "-1" is specified
 }
 
 
@@ -76,7 +77,8 @@ impl Default for Config{
             timeavgend:1000000,
 
             rndstrtpheno: vec![0,1], // Phenotype id 0 denotes inviable genotypes
-            replid: 0
+            replid: 0,
+            omega: 1.0
         }
     }
 }
@@ -112,6 +114,7 @@ impl Config{
 
             ap.refer(&mut config.rndstrtpheno).add_option(&["-h","--rndstrtpheno"],List,"Start simulation with all organisms having a random genotype from given phenotypes?");
             ap.refer(&mut config.replid).add_option(&["-l","--replid"],Store,"If only one replicate, should this replicate be given an id?");
+            ap.refer(&mut config.omega).add_option(&["--omega"],Store,"Replace every -1 in env.cfg file with the value specified here (allows changing fluctuation rate without changing config file)");
 
 
             ap.parse_args_or_exit(); 
