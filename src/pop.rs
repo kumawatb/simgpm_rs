@@ -30,7 +30,7 @@ impl Population{
         Ok(pop)
     }
 
-    pub fn gen_uniform(cfg: &Config, gpmap: &Gpmap) -> Result<Population, Box<dyn Error>>{ 
+    pub fn gen_uniform(cfg: &Config) -> Result<Population, Box<dyn Error>>{ 
         let mut popvec: Vec<Vec<u64>> = vec![vec![0; cfg.grid_y as usize]; cfg.grid_x as usize]; // Create empty
         let avgpopvec:Vec<Vec<f64>> = vec![vec![0.0; cfg.grid_y as usize]; cfg.grid_x as usize]; // Create an empty averaged population
 

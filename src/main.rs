@@ -61,7 +61,7 @@ fn main() {
 
     print!("Generating initial population.. ");
     // Parse/create initial population file
-    let pop: Population = Population::gen_uniform(&cfg,&gpmap).unwrap_or_else(|err| {
+    let pop: Population = Population::gen_uniform(&cfg).unwrap_or_else(|err| {
         println!("Could not generate initial population!: {}", err);
         process::exit(1);
     });
