@@ -1,6 +1,7 @@
 use std::error::Error;
 use crate::config::Config;
 use crate::gpm::Gpmap;
+use rand::{distributions::{Distribution, Uniform}};
 
 
 
@@ -24,6 +25,22 @@ impl Population{
 
         // Set popvec at rand x y to popsize
         popvec[randx as usize][randy as usize] = cfg.popsize;
+
+        let pop: Population = Population { pop: popvec, avgpop: avgpopvec };
+        Ok(pop)
+    }
+
+    pub fn gen_uniform(cfg: &Config, gpmap: &Gpmap) -> Result<Population, Box<dyn Error>>{ 
+        let mut popvec: Vec<Vec<u64>> = vec![vec![0; cfg.grid_y as usize]; cfg.grid_x as usize]; // Create empty
+        let avgpopvec:Vec<Vec<f64>> = vec![vec![0.0; cfg.grid_y as usize]; cfg.grid_x as usize]; // Create an empty averaged population
+
+        let dist_x = Uniform::from(0..cfg.grid_x as usize);
+        let dist_y = Uniform::from(0..cfg.grid_y as usize);
+
+        let mut rng = rand::thread_rng();
+        for _ in 0..cfg.popsize{
+            popvec[dist_x.sample(&mut rng)][dist_y.sample(&mut rng)] += 1;
+        }
 
         let pop: Population = Population { pop: popvec, avgpop: avgpopvec };
         Ok(pop)
